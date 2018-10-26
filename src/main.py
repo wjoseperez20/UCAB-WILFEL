@@ -22,7 +22,6 @@ salchichon = Ingrediente('Salchichón', 62.5, 'sa')
 ## Divisor que se utiliza para la parte gráfica de la aplicación.
 divisor = '******************************'
 
-
 ## Se inicializa la lista de tamaños que seleccionará el cliente, se ingresan los 3 tamaños definidos anteriormente.
 listaTamanos = [grande, mediana, personal]
 
@@ -33,6 +32,7 @@ listaIngredientes = [jamon, champinion, dobleQueso, aceituna, pepperoni, salchic
 ## Función para guardar la instancia del objeto pizza dentro de la lista de pizzas definida anteriormente.
 def AsignarPizza(pizza):
     listaPizzas.append(pizza)
+
 
 ## Función que calcula y retorna el precio total de compra, sumando el calculo de precio de cada pizza pedida por el cliente.
 def CalcularPrecioTotal():
@@ -52,8 +52,9 @@ def ObtenerTamano(identificador):
         if identificador == size.valorSeleccion:
             tamanoEncontrado = size
             break
-        
+
     return tamanoEncontrado
+
 
 ## Mediante el valor que ingresa el cliente en la consola, se obtiene la instancia real del objeto ingrediente.
 def ObtenerIngrediente(identificador):
@@ -66,6 +67,7 @@ def ObtenerIngrediente(identificador):
 
     return ingredienteEncontrado
 
+
 ## Mediante el valor que ingresa el cliente en la consola, se obtiene la instancia del objeto pizza.
 def ObtenerPizza(numero):
     pizzaEncontrada = None
@@ -75,7 +77,8 @@ def ObtenerPizza(numero):
             pizzaEncontrada = pizza
             break
 
-    return pizzaEncontrada 
+    return pizzaEncontrada
+
 
 def MenuSeleccionarPizza():
     valido = False
@@ -88,18 +91,21 @@ def MenuSeleccionarPizza():
                 print('=> Ingrese una pizza valida!!')
             else:
                 listaPizzas.remove(pizzaSeleccionada)
-                print('Pizza eliminada del pedido:', pizzaSeleccionada.tamano.nombre,', Precio:', pizzaSeleccionada.calcularPrecio(), 'Bfs')
+                print('Pizza eliminada del pedido:', pizzaSeleccionada.tamano.nombre, ', Precio:',
+                      pizzaSeleccionada.calcularPrecio(), 'Bfs')
         except:
             print('=> Ingrese un número valido!!')
             valido = False
+
 
 ## Función que permite imprimir la lista de pizzas del cliente.
 def ImprimirPizzas():
     print('')
     print('***** LISTA DE PIZZAS EN EL PEDIDO *****')
     for pizza in listaPizzas:
-        print('=> ',pizza.tamano.nombre, '[', pizza.identificador, ']', '- Precio:', pizza.calcularPrecio(), 'Bfs')
+        print('=> ', pizza.tamano.nombre, '[', pizza.identificador, ']', '- Precio:', pizza.calcularPrecio(), 'Bfs')
     print('')
+
 
 ## Función que desplega el segmento del menú para que el cliente pueda remover una pizza del pedido.
 def MenuRemoverPizza():
@@ -115,14 +121,17 @@ def MenuRemoverPizza():
         elif value.lower() == 'n':
             valido = True
         else:
-            print('=> Seleccione una opción valida !!')    
+            print('=> Seleccione una opción valida !!')
 
-## Función que permite imprimir la lista de tamaños definida anteriormente.
+        ## Función que permite imprimir la lista de tamaños definida anteriormente.
+
+
 def ImprimirTamanos():
     print('***** LISTA DE TAMAÑOS *****')
     for size in listaTamanos:
-        print('=> ',size.nombre, '[', size.valorSeleccion, ']', '- Precio:', size.precio, 'Bfs')
+        print('=> ', size.nombre, '[', size.valorSeleccion, ']', '- Precio:', size.precio, 'Bfs')
     print('')
+
 
 ## Función que desplega el segmento del menú para que el cliente pueda seleccionar un tamaño.
 def MenuSeleccionarTamano(pizza):
@@ -137,12 +146,14 @@ def MenuSeleccionarTamano(pizza):
             pizza.asignarTamano(tamano)
             print('Tamaño seleccionado:', tamano.nombre, '\n')
 
+
 ## Función que concatena y retorna todos los ingredientes pertenecientes a una pizza en un string.
 def ImprimirIngredientesSeleccionados(pizza):
     lista = ''
     for ingrediente in pizza.ingredientes:
-        lista += ingrediente.nombre + ' '
+        lista += ingrediente.nombre + ', '
     return lista
+
 
 ## Función que muestra los ingredientes seleccionados una vez se finaliza la selección de los mismos.
 def finalizarSeleccionIngredientes(pizza):
@@ -151,12 +162,14 @@ def finalizarSeleccionIngredientes(pizza):
     else:
         print('Usted seleccionó una pizza', pizza.tamano.nombre, 'con:', ImprimirIngredientesSeleccionados(pizza), '\n')
 
+
 ## Función que permite imprimir la lista de ingredientes definida anteriormente.
 def ImprimirIngredientes():
     print('***** LISTA DE INGREDIENTES *****')
     for ingrediente in listaIngredientes:
-        print('=> ',ingrediente.nombre, '[', ingrediente.valorSeleccion, ']', '- Precio:', ingrediente.precio, 'Bfs')
+        print('=> ', ingrediente.nombre, '[', ingrediente.valorSeleccion, ']', '- Precio:', ingrediente.precio, 'Bfs')
     print('')
+
 
 ## Función que desplega el segmento del menú para que el cliente pueda seleccionar los ingredientes.
 def MenuSeleccionarIngredientes(pizza):
@@ -175,6 +188,7 @@ def MenuSeleccionarIngredientes(pizza):
             else:
                 pizza.agregarIngrediente(ingrediente)
 
+
 ## Función que desplega el segmento del menú para que el cliente pueda finalizar o continuar el pedido.
 def MenuContinuarPedido():
     fin = False
@@ -190,15 +204,14 @@ def MenuContinuarPedido():
         else:
             print('=> Seleccione una opción valida !!')
     print(divisor)
-    return fin         
+    return fin
+
 
 ## Función que retorna un booleano dependiendo si el argumento de la función es None o no.
 def validarValorIngresado(valor):
     if valor is None:
         return False
     return True
-
-
 
 
 ## Variable que permite detener el Loop del menú principal
@@ -210,7 +223,7 @@ mensajeInicial = '***** PIZZERÍA DON WILFEL ***** \n'
 
 print(mensajeInicial)
 ## Loop que despliega el menú principal de la aplicación
-while not fin :
+while not fin:
     identificadorPizza += 1
     pizza = PizzaCliente(identificadorPizza)
     AsignarPizza(pizza)
@@ -219,10 +232,10 @@ while not fin :
     MenuSeleccionarTamano(pizza)
     ImprimirIngredientes()
     MenuSeleccionarIngredientes(pizza)
-    print('Subtotal a pagar por una pizza', pizza.tamano.nombre,':',pizza.calcularPrecio(), 'Bfs \n')
+    print('Subtotal a pagar por una pizza', pizza.tamano.nombre, ':', pizza.calcularPrecio(), 'Bfs \n')
     MenuRemoverPizza()
     print('')
     fin = MenuContinuarPedido()
 
-print('El pedido tiene un total de', len(listaPizzas), 'pizza(s) por un valor de', CalcularPrecioTotal(),'Bfs')
+print('El pedido tiene un total de', len(listaPizzas), 'pizza(s) por un valor de', CalcularPrecioTotal(), 'Bfs')
 print('Gracias por su compra, regrese pronto!')
