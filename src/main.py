@@ -1,6 +1,6 @@
-from sizePizza import TamanoPizza
-from IngredientePizza import Ingrediente
-from PizzaCliente import PizzaCliente
+from model.sizePizza import TamanoPizza
+from model.IngredientePizza import Ingrediente
+from model.PizzaCliente import PizzaCliente
 
 ## Se inicializa el arreglo vacio para listar las pizzas que ordene el cliente.
 listaPizzas = []
@@ -66,6 +66,57 @@ def ObtenerIngrediente(identificador):
 
     return ingredienteEncontrado
 
+## Mediante el valor que ingresa el cliente en la consola, se obtiene la instancia del objeto pizza.
+def ObtenerPizza(numero):
+    pizzaEncontrada = None
+
+    for pizza in listaPizzas:
+        if numero == pizza.identificador:
+            pizzaEncontrada = pizza
+            break
+
+    return pizzaEncontrada 
+
+def MenuSeleccionarPizza():
+    valido = False
+    while not valido:
+        try:
+            value = int(input('Seleccione una pizza de la lista según el número:'))
+            pizzaSeleccionada = ObtenerPizza(value)
+            valido = validarValorIngresado(pizzaSeleccionada)
+            if not valido:
+                print('=> Ingrese una pizza valida!!')
+            else:
+                listaPizzas.remove(pizzaSeleccionada)
+                print('Pizza eliminada del pedido:', pizzaSeleccionada.tamano.nombre,', Precio:', pizzaSeleccionada.calcularPrecio(), 'Bfs')
+        except:
+            print('=> Ingrese un número valido!!')
+            valido = False
+
+## Función que permite imprimir la lista de pizzas del cliente.
+def ImprimirPizzas():
+    print('')
+    print('***** LISTA DE PIZZAS EN EL PEDIDO *****')
+    for pizza in listaPizzas:
+        print('=> ',pizza.tamano.nombre, '[', pizza.identificador, ']', '- Precio:', pizza.calcularPrecio(), 'Bfs')
+    print('')
+
+## Función que desplega el segmento del menú para que el cliente pueda remover una pizza del pedido.
+def MenuRemoverPizza():
+    valido = False
+    while not valido:
+        if len(listaPizzas) < 1:
+            print('=> Ya no tiene mas pizzas en el pedido !!')
+            break
+        value = input('==> ATENCIÓN: Desea remover una pizza del pedido? [s/n]:')
+        if value.lower() == 's':
+            ImprimirPizzas()
+            MenuSeleccionarPizza()
+        elif value.lower() == 'n':
+            valido = True
+        else:
+            print('=> Seleccione una opción valida !!')    
+
 ## Función que permite imprimir la lista de tamaños definida anteriormente.
 def ImprimirTamanos():
     print('***** LISTA DE TAMAÑOS *****')
@@ -130,7 +181,7 @@ def MenuContinuarPedido():
     print(divisor)
     valido = False
     while not valido:
-        value = input('Desea continuar? [s/n]:')
+        value = input('Desea continuar con el pedido? [s/n]:')
         if value == 's':
             valido = True
         elif value == 'n':
@@ -153,13 +204,15 @@ def validarValorIngresado(valor):
 ## Variable que permite detener el Loop del menú principal
 fin = False
 
+identificadorPizza = 0
+
 mensajeInicial = '***** PIZZERÍA DON WILFEL ***** \n'
 
 print(mensajeInicial)
-
 ## Loop que despliega el menú principal de la aplicación
 while not fin :
-    pizza = PizzaCliente()
+    identificadorPizza += 1
+    pizza = PizzaCliente(identificadorPizza)
     AsignarPizza(pizza)
     print('Pizza Número:', len(listaPizzas), '\n')
     ImprimirTamanos()
@@ -167,6 +220,8 @@ while not fin :
     ImprimirIngredientes()
     MenuSeleccionarIngredientes(pizza)
     print('Subtotal a pagar por una pizza', pizza.tamano.nombre,':',pizza.calcularPrecio(), 'Bfs \n')
+    MenuRemoverPizza()
+    print('')
     fin = MenuContinuarPedido()
 
 print('El pedido tiene un total de', len(listaPizzas), 'pizza(s) por un valor de', CalcularPrecioTotal(),'Bfs')

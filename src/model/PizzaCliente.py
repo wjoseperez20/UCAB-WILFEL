@@ -3,8 +3,9 @@
 ## ingredientes: Ingredientes que posee la pizza, atributo de tipo lista de tipo de dato Ingrediente.
 class PizzaCliente:    
 
-    def __init__(self):
+    def __init__(self, identificador):
         self.ingredientes = []
+        self.identificador = identificador
         self.tamano = None
 
     def agregarIngrediente(self, ingrediente):
